@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+node_modules/
+coverage/
+test-results/
+*.log
+mailroom-demo.html
+dist/

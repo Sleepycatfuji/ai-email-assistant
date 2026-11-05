@@ -1,0 +1,25 @@
+# Import this repository as a Render Blueprint. Google credentials are entered
+# securely in Render, never in this file. Deployment is not triggered by adding it.
+services:
+  - type: web
+    name: mailroom
+    runtime: node
+    plan: free
+    buildCommand: npm ci --omit=dev --ignore-scripts
+    startCommand: npm start
+    healthCheckPath: /api/status
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: APP_ORIGIN
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GMAIL_ALLOWED_EMAIL
+        sync: false

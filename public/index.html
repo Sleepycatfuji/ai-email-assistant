@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Turn your emails into clear next steps and thoughtful replies."
+    />
+    <title>Mailroom — A little less inbox.</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Workspace navigation">
+        <a class="brand" href="/" aria-label="Mailroom home"
+          ><img src="/favicon.svg" alt="" width="35" height="35" />mailroom<span
+            class="brand-dot"
+            >.</span
+          ></a
+        >
+        <div class="workspace-label">YOUR WORKSPACE</div>
+        <button class="nav-item active" id="samples-nav">
+          <span aria-hidden="true">▤</span> Sample inbox
+          <span class="count">3</span>
+        </button>
+        <button class="nav-item" id="paste-nav">
+          <span aria-hidden="true">＋</span> Paste an email
+        </button>
+        <button class="nav-item" id="gmail-nav">
+          <span aria-hidden="true">@</span> My Gmail
+        </button>
+        <div class="sidebar-note">
+          <div class="note-spark" aria-hidden="true">✧</div>
+          <h2>Make room for<br />the good work.</h2>
+          <p>A little help with your inbox.<br />A little more time for you.</p>
+          <div class="note-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+        <div class="sidebar-bottom">
+          <span class="avatar small">Y</span>
+          <div>
+            <strong>Your workspace</strong><span>Personal testing</span>
+          </div>
+          <span class="small-spark" aria-hidden="true">✦</span>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div class="breadcrumb">
+            Workspace <span>/</span> <strong>Email assistant</strong>
+          </div>
+          <button id="how-button" class="quiet-button">
+            How it works <span aria-hidden="true">↗</span>
+          </button>
+        </header>
+        <section class="page-heading">
+          <div>
+            <div class="eyebrow">LESS BUSYWORK. MORE HEADSPACE.</div>
+            <h1>A little less inbox.</h1>
+            <p>Find the important bits. Get a head start on your reply.</p>
+          </div>
+          <div class="mode-pill" id="mode-pill">
+            <span></span><span id="mode-label">Checking connection…</span>
+          </div>
+        </section>
+        <div class="demo-banner" id="mode-banner">
+          <span class="banner-icon" aria-hidden="true">✧</span>
+          <p id="mode-description">Checking the assistant connection…</p>
+          <span class="banner-tag">YOU’RE IN CONTROL</span>
+        </div>
+
+        <section class="gmail-connection" aria-label="Gmail connection">
+          <div>
+            <h2>Bring your own inbox</h2>
+            <p id="gmail-connection-status">Checking Gmail connection…</p>
+            <p class="gmail-privacy">
+              Read-only access. Nothing is sent or marked as read. Live AI
+              receives an email only when you click Analyze.
+            </p>
+          </div>
+          <div class="connection-buttons">
+            <button id="gmail-connect" class="secondary-button">
+              Connect Gmail</button
+            ><button id="gmail-disconnect" class="secondary-button" hidden>
+              Disconnect
+            </button>
+          </div>
+        </section>
+
+        <section class="mail-grid" aria-label="Email workspace">
+          <div class="email-panel panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-kicker">01 / THE EMAIL</span>
+                <h2>Start with a message</h2>
+              </div>
+              <span class="outline-icon" aria-hidden="true">↙</span>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Email source">
+              <button
+                id="sample-tab"
+                role="tab"
+                aria-selected="true"
+                aria-controls="sample-view"
+              >
+                Try a sample</button
+              ><button
+                id="paste-tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="paste-view"
+                tabindex="-1"
+              >
+                Paste your own
+              </button>
+              <button
+                id="gmail-tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="gmail-view"
+                tabindex="-1"
+              >
+                My Gmail
+              </button>
+            </div>
+            <div id="sample-view" role="tabpanel" aria-labelledby="sample-tab">
+              <div
+                id="sample-list"
+                class="sample-list"
+                aria-label="Sample emails"
+              ></div>
+              <article class="email-preview" aria-label="Selected email">
+                <div class="email-meta">
+                  <span class="avatar" id="sender-avatar">JL</span>
+                  <div>
+                    <strong id="preview-from"></strong
+                    ><span id="preview-address"></span>
+                  </div>
+                  <span class="email-time">Sample</span>
+                </div>
+                <h3 id="preview-subject"></h3>
+                <div id="preview-body" class="email-body"></div>
+              </article>
+            </div>
+            <div
+              id="paste-view"
+              role="tabpanel"
+              aria-labelledby="paste-tab"
+              hidden
+            >
+              <div class="paste-form">
+                <p class="form-hint">Bring a message you’d like a hand with.</p>
+                <label for="email-from">From <span>(optional)</span></label
+                ><input
+                  id="email-from"
+                  maxlength="200"
+                  placeholder="Alex Morgan &lt;alex@example.com&gt;"
+                  autocomplete="off"
+                /><label for="email-subject"
+                  >Subject <span>(optional)</span></label
+                ><input
+                  id="email-subject"
+                  maxlength="200"
+                  placeholder="What’s the email about?"
+                  autocomplete="off"
+                /><label for="email-body">Email message</label
+                ><textarea
+                  id="email-body"
+                  maxlength="12000"
+                  placeholder="Paste the email here…"
+                  rows="10"
+                  aria-describedby="body-count"
+                ></textarea>
+                <div id="body-count" class="char-count">
+                  0 / 12,000 characters
+                </div>
+              </div>
+            </div>
+            <div
+              id="gmail-view"
+              role="tabpanel"
+              aria-labelledby="gmail-tab"
+              hidden
+            >
+              <div class="gmail-inbox-toolbar">
+                <span>10 recent inbox messages</span
+                ><button id="gmail-refresh" class="text-button">
+                  Refresh inbox
+                </button>
+              </div>
+              <p
+                id="gmail-inbox-status"
+                class="gmail-message-status"
+                role="status"
+              >
+                Connect Gmail to load your inbox.
+              </p>
+              <div id="gmail-message-list" class="sample-list"></div>
+              <article
+                id="gmail-preview"
+                class="email-preview"
+                aria-label="Selected Gmail email"
+                hidden
+              >
+                <p id="gmail-preview-from" class="gmail-message-status"></p>
+                <h3 id="gmail-preview-subject"></h3>
+                <p id="gmail-truncated" class="gmail-message-status" hidden></p>
+                <div id="gmail-preview-body" class="email-body"></div>
+              </article>
+            </div>
+            <div class="analyze-footer">
+              <button id="analyze-button" class="primary-button">
+                <span aria-hidden="true">✧</span
+                ><span id="analyze-label">Analyze email</span
+                ><span aria-hidden="true">→</span>
+              </button>
+              <p id="privacy-note">
+                Demo processing stays on this machine. Nothing is sent.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="assistant-panel panel"
+            aria-busy="false"
+            id="assistant-panel"
+          >
+            <div class="panel-heading">
+              <div>
+                <span class="panel-kicker">02 / A LITTLE ASSISTANCE</span>
+                <h2>Your next move, made easier.</h2>
+              </div>
+              <span class="assistant-emblem" aria-hidden="true">✦</span>
+            </div>
+            <div id="assistant-error" class="error-box" role="alert" hidden>
+              <p id="error-text"></p>
+              <button id="fallback-button" class="text-button" hidden>
+                Try offline demo instead →
+              </button>
+            </div>
+            <div id="empty-state" class="empty-state">
+              <div class="letter-art" aria-hidden="true">
+                <div class="letter-paper"><i></i><i></i><i></i></div>
+                <div class="letter-envelope">✧</div>
+                <span class="art-star">✦</span>
+              </div>
+              <span class="empty-kicker">A FRESH PERSPECTIVE</span>
+              <h3>From “I’ll get to it”<br />to “I’ve got this.”</h3>
+              <p>
+                Pick a sample or paste an email.<br />We’ll help you make sense
+                of it.
+              </p>
+              <div class="feature-pills">
+                <span>Quick summary</span><span>Clear next steps</span
+                ><span>A thoughtful reply</span>
+              </div>
+            </div>
+            <div id="loading-state" class="loading-state" role="status" hidden>
+              <div class="spinner"></div>
+              <h3>Finding the important bits…</h3>
+              <p>Putting together your summary and a first draft.</p>
+            </div>
+            <div id="analysis-result" class="analysis-result" hidden>
+              <section class="summary-section">
+                <div class="section-label">
+                  <h3>The short version</h3>
+                  <span id="result-mode" class="result-mode"></span>
+                </div>
+                <div class="result-tags">
+                  <span id="category-tag"></span><span id="priority-tag"></span>
+                </div>
+                <p id="summary-text"></p>
+                <p id="deadline" class="deadline" hidden></p>
+              </section>
+              <section class="actions-section">
+                <div class="section-label">
+                  <h3>Your next steps</h3>
+                  <span class="subtle" id="action-count"></span>
+                </div>
+                <ul id="action-list"></ul>
+                <p id="no-actions" class="subtle" hidden>
+                  No explicit action requested in this email.
+                </p>
+              </section>
+              <section class="reply-section">
+                <div class="section-label">
+                  <h3>A head start on your reply</h3>
+                  <span class="subtle">EDIT TO MAKE IT YOURS</span>
+                </div>
+                <div class="tone-row">
+                  <label for="reply-tone">Your tone</label
+                  ><select id="reply-tone">
+                    <option value="professional">Professional</option>
+                    <option value="friendly">Friendly</option>
+                    <option value="concise">Concise</option></select
+                  ><button
+                    id="regenerate-button"
+                    class="text-button"
+                    title="Replace your draft using the selected tone"
+                  >
+                    ↻ Regenerate
+                  </button>
+                </div>
+                <div class="draft-box">
+                  <label for="reply-subject">Subject</label
+                  ><input id="reply-subject" maxlength="240" /><label
+                    for="reply-body"
+                    class="sr-only"
+                    >Reply draft</label
+                  ><textarea
+                    id="reply-body"
+                    rows="9"
+                    maxlength="10000"
+                  ></textarea>
+                </div>
+                <div class="draft-footer">
+                  <span class="draft-label"
+                    ><span></span>Draft only · review before using</span
+                  >
+                  <div class="draft-buttons">
+                    <button
+                      id="download-button"
+                      class="secondary-button"
+                      aria-label="Download reply as a text file"
+                    >
+                      ↓ Download</button
+                    ><button id="copy-button" class="dark-button">
+                      Copy reply <span aria-hidden="true">↗</span>
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+        <footer class="page-footer">
+          <span
+            ><span aria-hidden="true">◇</span> A quieter inbox starts with a
+            little help.</span
+          ><span>Made for thoughtful replies.</span>
+        </footer>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <dialog id="help-dialog">
+      <button id="close-help" class="dialog-close" aria-label="Close help">
+        ×</button
+      ><span class="eyebrow">WELCOME TO MAILROOM</span>
+      <h2>A little help, from start to draft.</h2>
+      <ol>
+        <li>Choose a sample or paste an email.</li>
+        <li>
+          Click <strong>Analyze email</strong> to see a summary and next steps.
+        </li>
+        <li>Pick a tone, edit your reply, then copy or download it.</li>
+      </ol>
+      <p>
+        <strong>Demo mode</strong> uses simple rules and templates, so
+        suggestions will be limited. <strong>Live AI</strong> uses OpenAI when
+        the server has an API key.
+      </p>
+      <p>
+        Gmail connection is optional and read-only. Mailroom never sends email
+        or marks messages as read. Imported emails and drafts stay in memory;
+        disconnecting clears the imported content. Live analysis sends the
+        selected email text to OpenAI only when you click Analyze. You must be
+        the configured owner to connect Gmail.
+      </p>
+      <p>
+        To enable live AI, set <code>AI_API_KEY</code> securely on the server
+        and restart it. See the repository README for instructions.
+      </p>
+    </dialog>
+  </body>
+</html>
